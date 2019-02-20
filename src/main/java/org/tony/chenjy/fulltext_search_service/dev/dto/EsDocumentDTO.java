@@ -7,5 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EsDocumentDTO {
+public class EsDocumentDTO extends EsBaseDTO{
+    private String id;
+    private Long version;
+
+    public EsDocumentDTO(String index, String type, String id, Long version) {
+        super(index, type);
+        this.id = id;
+        this.version = version;
+    }
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 @Data
 public class EsProperty {
 
+    public static final String TYPE = "_doc";
+
     @Value("${elasticsearch.rest.uris}")
     private String[] uris;
 

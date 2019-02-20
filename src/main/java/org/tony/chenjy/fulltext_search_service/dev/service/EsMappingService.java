@@ -57,7 +57,6 @@ public class EsMappingService {
             for (ObjectCursor<String> indexItem : allMappings.keys()) {
                 ImmutableOpenMap<String, MappingMetaData> typeMappings = allMappings.get(indexItem.value);
                 for (ObjectCursor<String> typeItem : typeMappings.keys()) {
-                    // TODO fields
                     list.add(new EsMappingDTO(indexItem.value, typeItem.value));
                 }
             }

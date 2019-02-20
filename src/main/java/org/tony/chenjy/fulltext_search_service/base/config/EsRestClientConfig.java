@@ -23,18 +23,6 @@ public class EsRestClientConfig implements FactoryBean<RestHighLevelClient>, Ini
     private RestHighLevelClient client;
 
     @Override
-    public void destroy() throws Exception {
-        try {
-            logger.info("Closing elasticsearch rest client");
-            if (client != null) {
-                client.close();
-            }
-        } catch (final Exception e) {
-            logger.error("Error closing elasticsearch rest client: ", e);
-        }
-    }
-
-    @Override
     public RestHighLevelClient getObject() throws Exception {
         return client;
     }
@@ -60,5 +48,17 @@ public class EsRestClientConfig implements FactoryBean<RestHighLevelClient>, Ini
             httpHosts[i] = HttpHost.create(esProperty.getUris()[i]);
         }
         client = new RestHighLevelClient(RestClient.builder(httpHosts));
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        try {
+            logger.info("Closing elasticsearch rest client");
+            if (client != null) {
+                client.close();
+            }
+        } catch (final Exception e) {
+            logger.error("Error closing elasticsearch rest client: ", e);
+        }
     }
 }

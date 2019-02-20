@@ -16,16 +16,19 @@ public class EsIndexServiceApi {
     @Resource
     private EsIndexService esIndexService;
 
-    @PutMapping(value = "{index}/{type}")
-    public AjaxJson putIndex(@PathVariable String index,
+    @PostMapping(value = "{index}/{type}")
+    public AjaxJson postIndex(@PathVariable String index,
                               @PathVariable String type,
                               @RequestBody Map<String, Object> properties) {
         this.esIndexService.createIndex(index, type, properties);
         return new AjaxJson(AjaxJson.STATUS_SUCCESS, null, null);
     }
 
-    // TODO 删除
-    // TODO 修改
+    @DeleteMapping(value = "{index}")
+    public AjaxJson deleteIndex(@PathVariable String index) {
+        boolean data = this.esIndexService.deleteIndex(index);
+        return new AjaxJson(AjaxJson.STATUS_SUCCESS, null, data);
+    }
 
     @GetMapping(value = "all")
     public AjaxJson allIndices() {

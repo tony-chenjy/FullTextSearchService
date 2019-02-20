@@ -3,8 +3,10 @@ package org.tony.chenjy.fulltext_search_service.dev.service;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
+import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
@@ -43,6 +45,19 @@ public class EsIndexService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // 删除索引
+    public boolean deleteIndex(String index) {
+        try {
+            DeleteIndexRequest request = new DeleteIndexRequest(index);
+            AcknowledgedResponse response = client.indices().delete(request, RequestOptions.DEFAULT);
+            boolean acknowledged = response.isAcknowledged();
+            return acknowledged;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     // 获取所有索引
